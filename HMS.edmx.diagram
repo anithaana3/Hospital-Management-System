@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b0d704dea91d48a2a34ca72d38c6449c" Name="Diagram1">
+        <EntityTypeShape EntityType="database1Model.AddPatient" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Addstaff" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Bill" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Lab" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="database1Model.FK__AddPatien__staff__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK__Bill__pid__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK__Lab__pid__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK__Bill__sno__5CD6CB2B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddPatient">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pname" Type="varchar" MaxLength="50" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="gender" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="date_of_appointment" Type="datetime" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="problem" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="specialist" Type="varchar" MaxLength="1" />
+          <Property Name="staffid" Type="int" />
+          <Property Name="Staffname" Type="varchar" MaxLength="10" />
+          <Property Name="prescription" Type="varchar" MaxLength="100" />
+          <Property Name="report" Type="varchar" MaxLength="100" />
+          <Property Name="bill" Type="int" Nullable="false" />
+          <Property Name="Recheckupdate" Type="datetime" />
+          <Property Name="Resheduledate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Addstaff">
+          <Key>
+            <PropertyRef Name="staffid" />
+          </Key>
+          <Property Name="staffid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Staffname" Type="varchar" MaxLength="30" />
+          <Property Name="Emailid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" />
+          <Property Name="Pwd" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Position" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bno" />
+          </Key>
+          <Property Name="Bno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pid" Type="int" />
+          <Property Name="sno" Type="int" />
+          <Property Name="BillingDate" Type="datetime" Nullable="false" />
+          <Property Name="SName" Type="varchar" MaxLength="30" />
+          <Property Name="ConsultancyFee" Type="int" Nullable="false" />
+          <Property Name="Test" Type="varchar" MaxLength="1" />
+          <Property Name="testFee" Type="int" Nullable="false" />
+          <Property Name="subtotal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lab">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pid" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Test" Type="varchar" MaxLength="1" />
+          <Property Name="SName" Type="varchar" MaxLength="30" />
+          <Property Name="report" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__AddPatien__staff__5535A963">
+          <End Role="Addstaff" Type="Self.Addstaff" Multiplicity="0..1" />
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addstaff">
+              <PropertyRef Name="staffid" />
+            </Principal>
+            <Dependent Role="AddPatient">
+              <PropertyRef Name="staffid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__pid__5BE2A6F2">
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddPatient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__sno__5CD6CB2B">
+          <End Role="Lab" Type="Self.Lab" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lab">
+              <PropertyRef Name="Sno" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="sno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lab__pid__5812160E">
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="0..1" />
+          <End Role="Lab" Type="Self.Lab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddPatient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Lab">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="database1ModelStoreContainer">
+          <EntitySet Name="AddPatient" EntityType="Self.AddPatient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Addstaff" EntityType="Self.Addstaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lab" EntityType="Self.Lab" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AddPatien__staff__5535A963" Association="Self.FK__AddPatien__staff__5535A963">
+            <End Role="Addstaff" EntitySet="Addstaff" />
+            <End Role="AddPatient" EntitySet="AddPatient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__pid__5BE2A6F2" Association="Self.FK__Bill__pid__5BE2A6F2">
+            <End Role="AddPatient" EntitySet="AddPatient" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__sno__5CD6CB2B" Association="Self.FK__Bill__sno__5CD6CB2B">
+            <End Role="Lab" EntitySet="Lab" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lab__pid__5812160E" Association="Self.FK__Lab__pid__5812160E">
+            <End Role="AddPatient" EntitySet="AddPatient" />
+            <End Role="Lab" EntitySet="Lab" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AddPatient">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date_of_appointment" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="problem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="specialist" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="staffid" Type="Int32" />
+          <Property Name="Staffname" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="prescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="report" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="bill" Type="Int32" Nullable="false" />
+          <Property Name="Recheckupdate" Type="DateTime" Precision="3" />
+          <Property Name="Resheduledate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Addstaff" Relationship="Self.FK__AddPatien__staff__5535A963" FromRole="AddPatient" ToRole="Addstaff" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__pid__5BE2A6F2" FromRole="AddPatient" ToRole="Bill" />
+          <NavigationProperty Name="Labs" Relationship="Self.FK__Lab__pid__5812160E" FromRole="AddPatient" ToRole="Lab" />
+        </EntityType>
+        <EntityType Name="Addstaff">
+          <Key>
+            <PropertyRef Name="staffid" />
+          </Key>
+          <Property Name="staffid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Staffname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Emailid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Pwd" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AddPatients" Relationship="Self.FK__AddPatien__staff__5535A963" FromRole="Addstaff" ToRole="AddPatient" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bno" />
+          </Key>
+          <Property Name="Bno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pid" Type="Int32" />
+          <Property Name="sno" Type="Int32" />
+          <Property Name="BillingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ConsultancyFee" Type="Int32" Nullable="false" />
+          <Property Name="Test" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="testFee" Type="Int32" Nullable="false" />
+          <Property Name="subtotal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AddPatient" Relationship="Self.FK__Bill__pid__5BE2A6F2" FromRole="Bill" ToRole="AddPatient" />
+          <NavigationProperty Name="Lab" Relationship="Self.FK__Bill__sno__5CD6CB2B" FromRole="Bill" ToRole="Lab" />
+        </EntityType>
+        <EntityType Name="Lab">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pid" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Test" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="report" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AddPatient" Relationship="Self.FK__Lab__pid__5812160E" FromRole="Lab" ToRole="AddPatient" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__sno__5CD6CB2B" FromRole="Lab" ToRole="Bill" />
+        </EntityType>
+        <Association Name="FK__AddPatien__staff__5535A963">
+          <End Role="Addstaff" Type="Self.Addstaff" Multiplicity="0..1" />
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addstaff">
+              <PropertyRef Name="staffid" />
+            </Principal>
+            <Dependent Role="AddPatient">
+              <PropertyRef Name="staffid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__pid__5BE2A6F2">
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddPatient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lab__pid__5812160E">
+          <End Role="AddPatient" Type="Self.AddPatient" Multiplicity="0..1" />
+          <End Role="Lab" Type="Self.Lab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddPatient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Lab">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__sno__5CD6CB2B">
+          <End Role="Lab" Type="Self.Lab" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lab">
+              <PropertyRef Name="Sno" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="sno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AddPatients" EntityType="Self.AddPatient" />
+          <EntitySet Name="Addstaffs" EntityType="Self.Addstaff" />
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Labs" EntityType="Self.Lab" />
+          <AssociationSet Name="FK__AddPatien__staff__5535A963" Association="Self.FK__AddPatien__staff__5535A963">
+            <End Role="Addstaff" EntitySet="Addstaffs" />
+            <End Role="AddPatient" EntitySet="AddPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__pid__5BE2A6F2" Association="Self.FK__Bill__pid__5BE2A6F2">
+            <End Role="AddPatient" EntitySet="AddPatients" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lab__pid__5812160E" Association="Self.FK__Lab__pid__5812160E">
+            <End Role="AddPatient" EntitySet="AddPatients" />
+            <End Role="Lab" EntitySet="Labs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__sno__5CD6CB2B" Association="Self.FK__Bill__sno__5CD6CB2B">
+            <End Role="Lab" EntitySet="Labs" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="database1ModelStoreContainer" CdmEntityContainer="database1Entities">
+          <EntitySetMapping Name="AddPatients">
+            <EntityTypeMapping TypeName="database1Model.AddPatient">
+              <MappingFragment StoreEntitySet="AddPatient">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="date_of_appointment" ColumnName="date_of_appointment" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="problem" ColumnName="problem" />
+                <ScalarProperty Name="specialist" ColumnName="specialist" />
+                <ScalarProperty Name="staffid" ColumnName="staffid" />
+                <ScalarProperty Name="Staffname" ColumnName="Staffname" />
+                <ScalarProperty Name="prescription" ColumnName="prescription" />
+                <ScalarProperty Name="report" ColumnName="report" />
+                <ScalarProperty Name="bill" ColumnName="bill" />
+                <ScalarProperty Name="Recheckupdate" ColumnName="Recheckupdate" />
+                <ScalarProperty Name="Resheduledate" ColumnName="Resheduledate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addstaffs">
+            <EntityTypeMapping TypeName="database1Model.Addstaff">
+              <MappingFragment StoreEntitySet="Addstaff">
+                <ScalarProperty Name="staffid" ColumnName="staffid" />
+                <ScalarProperty Name="Staffname" ColumnName="Staffname" />
+                <ScalarProperty Name="Emailid" ColumnName="Emailid" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="database1Model.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="database1Model.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Bno" ColumnName="Bno" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="sno" ColumnName="sno" />
+                <ScalarProperty Name="BillingDate" ColumnName="BillingDate" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="ConsultancyFee" ColumnName="ConsultancyFee" />
+                <ScalarProperty Name="Test" ColumnName="Test" />
+                <ScalarProperty Name="testFee" ColumnName="testFee" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Labs">
+            <EntityTypeMapping TypeName="database1Model.Lab">
+              <MappingFragment StoreEntitySet="Lab">
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Test" ColumnName="Test" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="report" ColumnName="report" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
